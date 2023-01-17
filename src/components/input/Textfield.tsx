@@ -5,7 +5,7 @@ const ContainerLabel = styled.label`
   display: block;
   position: relative;
   font-size: 1rem;
-  margin-top: 1.5em;
+  margin: 1.5em 0;
 `;
 const InputField = styled.input`
   appearance: none;
@@ -46,18 +46,29 @@ const LabelText = styled.span`
     transform: translate(-20px, -3.25em);
   }
 `;
+const ErrorText = styled.span`
+  display: block;
+  position: absolute;
+  top: 100%;
+  margin-left: 5px;
+  color: ${({ theme }) => theme.colors.red_500};
+  line-height: 1.5;
+`;
 const Sign = styled.span`
   color: ${({ theme }) => theme.colors.red_500};
 `;
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
+  error: string;
+  touched: boolean;
 };
 
-const Textfield = ({ label, ...props }: Props) => {
+const Textfield = ({ label, error, touched, ...props }: Props) => {
   return (
     <ContainerLabel>
       <InputField type="text" {...props} />
+      <ErrorText>{touched ? error : ""}</ErrorText>
       <LabelText>
         {label}
         {props.required ? <Sign>*</Sign> : ""}
